@@ -51,10 +51,6 @@ const FEATURES = [
       "See every interview grouped by status — upcoming, completed, passed, failed — and act on it in one place.",
   },
 ];
-
-// FlowingMenu only shows a title + a decorative hover image per row (no
-// description slot) — image is a placeholder until real product screenshots
-// are swapped in.
 const FEATURE_MENU_ITEMS = FEATURES.map((feature, i) => ({
   link: "#features",
   text: feature.title,
@@ -64,9 +60,7 @@ const FEATURE_MENU_ITEMS = FEATURES.map((feature, i) => ({
 export default function MarketingHomePage() {
   return (
     <>
-      {/* HOME — full-screen video background */}
       <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* FULL-PAGE BACKGROUND VIDEO */}
         <video
           className="absolute inset-0 h-full w-full object-cover"
           src="/hero.mp4"
@@ -75,8 +69,6 @@ export default function MarketingHomePage() {
           muted
           playsInline
         />
-
-        {/* dark overlay so all text stays readable over the video */}
         <div className="absolute inset-0 bg-black/50" />
         <div className="font-display absolute top-24 left-6 sm:left-10 z-10 text-white max-w-[40%]">
           <p className="text-sm font-medium uppercase tracking-wider text-white/60">Live room</p>
@@ -87,8 +79,6 @@ export default function MarketingHomePage() {
           <p className="text-sm font-medium uppercase tracking-wider text-white/60">Feedback</p>
           <p className="text-4xl font-semibold">Rate &amp; comment</p>
         </div>
-
-        {/* minimal scroll cue — bottom center */}
         <ScrollLink
           to="about"
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white/50 hover:text-white/90 transition-colors animate-bounce"
@@ -100,21 +90,16 @@ export default function MarketingHomePage() {
       {/* ABOUT */}
       <section id="about" className="border-t">
         <div className="container max-w-6xl mx-auto px-6 sm:px-10 py-28 sm:py-40">
-          {/* PART 1 — summary statement, near middle-left */}
           <ScrollReveal className="max-w-3xl md:ml-[6%] md:pr-12">
-            {/* small — eyebrow label */}
             <p className="text-xs sm:text-sm uppercase tracking-[0.25em] text-muted-foreground mb-6">
               &sect;&ensp;The idea
             </p>
-            {/* large — the summary itself */}
+
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-[1.08] tracking-tight">
               One shared room for the call, the code &amp; the verdict.
             </h2>
           </ScrollReveal>
-
-          {/* PART 2 — detail, below and to the right */}
           <ScrollReveal className="max-w-xl ml-auto md:mr-[6%] md:pl-12 mt-16 sm:mt-24 text-right">
-            {/* medium — supporting paragraph */}
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               No more juggling a video tab, a code pad &amp; a notes doc. TechMock drops the
               interviewer and candidate into one place &mdash; same call, same editor, same
@@ -125,7 +110,6 @@ export default function MarketingHomePage() {
             </p>
           </ScrollReveal>
 
-          {/* PART 3 — how it runs */}
           <ScrollReveal className="mt-28 sm:mt-44">
             <p className="text-xs sm:text-sm uppercase tracking-[0.25em] text-muted-foreground mb-10">
               &sect;&ensp;How it runs
@@ -146,7 +130,6 @@ export default function MarketingHomePage() {
             </div>
           </ScrollReveal>
 
-          {/* PART 4 — pull quote + signature */}
           <ScrollReveal className="mt-28 sm:mt-44 max-w-2xl ml-auto md:mr-[6%] text-right">
             <p className="font-display text-2xl sm:text-4xl italic leading-snug">
               &ldquo;Watch them think &mdash; not just read what they typed.&rdquo;
@@ -171,7 +154,6 @@ export default function MarketingHomePage() {
           </div>
         </ScrollReveal>
 
-        {/* full-width, edge-to-edge — intentionally outside the max-w-6xl container above */}
         <div className="relative w-full h-[70vh] min-h-[420px] max-h-[920px] border-y">
           <FlowingMenu
             items={FEATURE_MENU_ITEMS}
