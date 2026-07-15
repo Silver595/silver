@@ -62,7 +62,7 @@ export default function MarketingHomePage() {
           src="/hero.mp4"
           autoPlay
           loop
-
+          muted
           playsInline
         />
 
