@@ -1,7 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   CalendarIcon,
+  ChevronDownIcon,
   Code2Icon,
   MessageSquareIcon,
   PlayIcon,
@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ScrollLink from "@/components/ScrollLink";
+import FlowingMenu from "@/components/ui/flowing-menu";
 import { cn } from "@/lib/utils";
 
 const FEATURES = [
@@ -51,6 +52,15 @@ const FEATURES = [
   },
 ];
 
+// FlowingMenu only shows a title + a decorative hover image per row (no
+// description slot) — image is a placeholder until real product screenshots
+// are swapped in.
+const FEATURE_MENU_ITEMS = FEATURES.map((feature, i) => ({
+  link: "#features",
+  text: feature.title,
+  image: `https://picsum.photos/seed/techmock-${i}/400/300`,
+}));
+
 export default function MarketingHomePage() {
   return (
     <>
@@ -77,6 +87,14 @@ export default function MarketingHomePage() {
           <p className="text-sm font-medium uppercase tracking-wider text-white/60">Feedback</p>
           <p className="text-4xl font-semibold">Rate &amp; comment</p>
         </div>
+
+        {/* minimal scroll cue — bottom center */}
+        <ScrollLink
+          to="about"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white/50 hover:text-white/90 transition-colors animate-bounce"
+        >
+          <ChevronDownIcon className="size-6" />
+        </ScrollLink>
       </section>
 
       {/* ABOUT */}
@@ -107,9 +125,7 @@ export default function MarketingHomePage() {
             </p>
           </ScrollReveal>
 
-
-
-          {/* PART 4 — how it runs */}
+          {/* PART 3 — how it runs */}
           <ScrollReveal className="mt-28 sm:mt-44">
             <p className="text-xs sm:text-sm uppercase tracking-[0.25em] text-muted-foreground mb-10">
               &sect;&ensp;How it runs
@@ -130,7 +146,7 @@ export default function MarketingHomePage() {
             </div>
           </ScrollReveal>
 
-          {/* PART 5 — pull quote + signature */}
+          {/* PART 4 — pull quote + signature */}
           <ScrollReveal className="mt-28 sm:mt-44 max-w-2xl ml-auto md:mr-[6%] text-right">
             <p className="font-display text-2xl sm:text-4xl italic leading-snug">
               &ldquo;Watch them think &mdash; not just read what they typed.&rdquo;
@@ -143,8 +159,8 @@ export default function MarketingHomePage() {
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="border-t">
-        <ScrollReveal className="container max-w-6xl mx-auto px-4 py-24">
+      <section id="features" className="border-t pb-24">
+        <ScrollReveal className="container max-w-6xl mx-auto px-4 pt-24">
           <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold">
               Everything you need to run an interview
@@ -153,21 +169,20 @@ export default function MarketingHomePage() {
               One room for the call, the code, and the feedback.
             </p>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map((feature) => (
-              <Card key={feature.title}>
-                <CardHeader className="flex flex-row items-center gap-2">
-                  <feature.icon className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground">
-                  {feature.description}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </ScrollReveal>
+
+        {/* full-width, edge-to-edge — intentionally outside the max-w-6xl container above */}
+        <div className="relative w-full h-[70vh] min-h-[420px] max-h-[920px] border-y">
+          <FlowingMenu
+            items={FEATURE_MENU_ITEMS}
+            speed={15}
+            textColor="#f4f4f5"
+            bgColor="#18181b"
+            marqueeBgColor="#f4f4f5"
+            marqueeTextColor="#18181b"
+            borderColor="rgba(244,244,245,0.12)"
+          />
+        </div>
       </section>
     </>
   );
