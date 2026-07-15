@@ -11,7 +11,7 @@ function SchedulePage() {
   const { isInterviewer, isLoading } = useUserRole();
 
   if (isLoading) return <LoaderUI />;
-  if (!isInterviewer) return router.push("/");
+  if (!isInterviewer) return router.push("/home");
 
   return <InterviewScheduleUI />;
 }
