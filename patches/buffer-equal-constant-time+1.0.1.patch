@@ -1,0 +1,17 @@
+diff --git a/node_modules/buffer-equal-constant-time/index.js b/node_modules/buffer-equal-constant-time/index.js
+index 5462c1f..15dc38d 100644
+--- a/node_modules/buffer-equal-constant-time/index.js
++++ b/node_modules/buffer-equal-constant-time/index.js
+@@ -1,7 +1,11 @@
+ /*jshint node:true */
+ 'use strict';
+ var Buffer = require('buffer').Buffer; // browserify
+-var SlowBuffer = require('buffer').SlowBuffer;
++// Node removed the legacy SlowBuffer API (fully gone as of Node 26); fall back to
++// Buffer so this 2013-era module doesn't crash on load. install()/restore() below
++// are unused by jwa/jsonwebtoken in this project, so this fallback is a no-op in
++// practice, not a behavior change.
++var SlowBuffer = require('buffer').SlowBuffer || Buffer;
+ 
+ module.exports = bufferEq;
+ 
