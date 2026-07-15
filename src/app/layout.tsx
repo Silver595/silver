@@ -37,6 +37,17 @@ export default function RootLayout({
   return (
     <ConvexClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          {/* "Jenkins Nord" is not a Google Font — using Playfair Display as a
+              stand-in. If you have the real Jenkins Nord file, drop it in and it
+              takes priority via the .font-display stack in globals.css. */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+            rel="stylesheet"
+          />
+        </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
