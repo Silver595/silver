@@ -81,17 +81,22 @@ export default function MarketingHomePage() {
 
       {/* ABOUT */}
       <section id="about" className="border-t">
-        <div className="container max-w-6xl mx-auto px-6 sm:px-10 py-28 sm:py-36">
+        <div className="container max-w-6xl mx-auto px-6 sm:px-10 py-28 sm:py-40">
+          {/* PART 1 — summary statement, near middle-left */}
           <ScrollReveal className="max-w-3xl md:ml-[6%] md:pr-12">
+            {/* small — eyebrow label */}
             <p className="text-xs sm:text-sm uppercase tracking-[0.25em] text-muted-foreground mb-6">
               &sect;&ensp;The idea
             </p>
+            {/* large — the summary itself */}
             <h2 className="font-display text-4xl sm:text-6xl font-bold leading-[1.08] tracking-tight">
               One shared room for the call, the code &amp; the verdict.
             </h2>
           </ScrollReveal>
 
+          {/* PART 2 — detail, below and to the right */}
           <ScrollReveal className="max-w-xl ml-auto md:mr-[6%] md:pl-12 mt-16 sm:mt-24 text-right">
+            {/* medium — supporting paragraph */}
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               No more juggling a video tab, a code pad &amp; a notes doc. TechMock drops the
               interviewer and candidate into one place &mdash; same call, same editor, same
@@ -99,6 +104,39 @@ export default function MarketingHomePage() {
             </p>
             <p className="mt-8 text-sm uppercase tracking-widest text-foreground/80">
               Built for teams who hire engineers&ensp;&rarr;
+            </p>
+          </ScrollReveal>
+
+
+
+          {/* PART 4 — how it runs */}
+          <ScrollReveal className="mt-28 sm:mt-44">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.25em] text-muted-foreground mb-10">
+              &sect;&ensp;How it runs
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+              {[
+                { n: "01", t: "Schedule", d: "Pick a candidate, a slot & a link." },
+                { n: "02", t: "Meet", d: "Hop on the call — grid or speaker." },
+                { n: "03", t: "Code", d: "Solve real problems, run them live." },
+                { n: "04", t: "Decide", d: "Rate, comment & mark pass or fail." },
+              ].map((step) => (
+                <div key={step.n} className="border-l pl-6">
+                  <p className="font-display text-2xl font-bold text-muted-foreground/60">{step.n}</p>
+                  <h3 className="mt-3 text-lg font-semibold">{step.t}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.d}</p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          {/* PART 5 — pull quote + signature */}
+          <ScrollReveal className="mt-28 sm:mt-44 max-w-2xl ml-auto md:mr-[6%] text-right">
+            <p className="font-display text-2xl sm:text-4xl italic leading-snug">
+              &ldquo;Watch them think &mdash; not just read what they typed.&rdquo;
+            </p>
+            <p className="mt-6 text-sm uppercase tracking-widest text-muted-foreground">
+              &mdash;&ensp;The TechMock team
             </p>
           </ScrollReveal>
         </div>
