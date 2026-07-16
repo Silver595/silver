@@ -1,8 +1,10 @@
 import { buttonVariants } from "@/components/ui/button";
+import FeatureScroll from "@/components/FeatureScroll"
 import {
   CalendarIcon,
   ChevronDownIcon,
   Code2Icon,
+  FeatherIcon,
   MessageSquareIcon,
   PlayIcon,
   UsersIcon,
@@ -12,50 +14,6 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ScrollLink from "@/components/ScrollLink";
 import FlowingMenu from "@/components/ui/flowing-menu";
 import { cn } from "@/lib/utils";
-
-const FEATURES = [
-  {
-    icon: VideoIcon,
-    title: "Live video interviews",
-    description:
-      "Start an instant call or schedule one for later. Grid or speaker layout, participant list, and standard call controls.",
-  },
-  {
-    icon: Code2Icon,
-    title: "Shared code editor",
-    description:
-      "A Monaco-powered editor sits right next to the video call, with a bank of coding questions and multi-language support.",
-  },
-  {
-    icon: PlayIcon,
-    title: "Run code live",
-    description:
-      "Candidates can actually execute their solution during the interview and see real output, not just a static file.",
-  },
-  {
-    icon: CalendarIcon,
-    title: "Scheduling",
-    description:
-      "Interviewers pick a candidate, one or more interviewers, a date and time slot, and get a shareable meeting link.",
-  },
-  {
-    icon: MessageSquareIcon,
-    title: "Feedback & ratings",
-    description:
-      "Leave a star rating and written comment on every interview, visible to every interviewer on that candidate.",
-  },
-  {
-    icon: UsersIcon,
-    title: "Interview dashboard",
-    description:
-      "See every interview grouped by status — upcoming, completed, passed, failed — and act on it in one place.",
-  },
-];
-const FEATURE_MENU_ITEMS = FEATURES.map((feature, i) => ({
-  link: "#features",
-  text: feature.title,
-  image: `https://picsum.photos/seed/techmock-${i}/400/300`,
-}));
 
 export default function MarketingHomePage() {
   return (
@@ -154,7 +112,9 @@ export default function MarketingHomePage() {
           </div>
         </ScrollReveal>
 
-        <div className="relative w-full h-[70vh] min-h-[420px] max-h-[920px] border-y">
+        <FeatureScroll />
+
+        {/*<div className="relative w-full h-[70vh] min-h-[420px] max-h-[920px] border-y">
           <FlowingMenu
             items={FEATURE_MENU_ITEMS}
             speed={15}
@@ -164,7 +124,7 @@ export default function MarketingHomePage() {
             marqueeTextColor="#18181b"
             borderColor="rgba(244,244,245,0.12)"
           />
-        </div>
+        </div>*/}
       </section>
     </>
   );
