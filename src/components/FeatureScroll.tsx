@@ -67,7 +67,7 @@ export const FEATURES: ScrollFeature[] = [
 
 // How much scroll distance (px) is spent "on" each feature before the next
 // one takes over. Bump this up for a slower, more deliberate scroll feel.
-const SCROLL_PER_FEATURE = 550;
+const SCROLL_PER_FEATURE = 950;
 
 interface FeatureScrollProps {
   features?: ScrollFeature[];
@@ -194,7 +194,7 @@ export default function FeatureScroll({
             key={i}
             className={cn(
               "h-1.5 w-1.5 rounded-full transition-all duration-300",
-              i === activeIndex ? "bg-foreground h-5" : "bg-foreground/25"
+              i === activeIndex ? "bg-white h-5" : "bg-white/25"
             )}
           />
         ))}
