@@ -9,27 +9,37 @@ import toast from "react-hot-toast";
 function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
   const [isCameraDisabled, setIsCameraDisabled] = useState(true);
   const [isMicDisabled, setIsMicDisabled] = useState(false);
+  const [isJoining, setIsJoining] = useState(false);
 
   const call = useCall();
 
-  if (!call) return null;
-
   useEffect(() => {
-    if (isCameraDisabled)
-        //toast.error("Camera is disabled. Please enable it to join the meeting.");
-
-    call.camera.disable()
+    if (!call) return;
+    if (isCameraDisabled) call.camera.disable();
     else call.camera.enable();
-  }, [isCameraDisabled, call.camera]);
+  }, [isCameraDisabled, call]);
 
   useEffect(() => {
+    if (!call) return;
     if (isMicDisabled) call.microphone.disable();
     else call.microphone.enable();
-  }, [isMicDisabled, call.microphone]);
+  }, [isMicDisabled, call]);
+
+  if (!call) return null;
 
   const handleJoin = async () => {
-    await call.join();
-    onSetupComplete();
+    // guard against double-join (double-click / retry) which the SDK rejects
+    // with "call.join() shall be called only once"
+    if (isJoining) return;
+    setIsJoining(true);
+    try {
+      await call.join();
+      onSetupComplete();
+    } catch (error) {
+      console.error("Failed to join call:", error);
+      toast.error("Couldn't join the meeting. Check your connection and try again.");
+      setIsJoining(false);
+    }
   };
 
   return (
@@ -118,8 +128,8 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
 
                 {/* JOIN BTN */}
                 <div className="space-y-3 mt-8">
-                  <Button className="w-full" size="lg" onClick={handleJoin}>
-                    Join Meeting
+                  <Button className="w-full" size="lg" onClick={handleJoin} disabled={isJoining}>
+                    {isJoining ? "Joining..." : "Join Meeting"}
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
                     Do not worry, our team is super friendly! We want you to succeed. 🎉

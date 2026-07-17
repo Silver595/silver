@@ -11,6 +11,7 @@ import MeetingModal from "@/components/MeetingModal";
 import LoaderUI from "@/components/LoaderUI";
 import { Loader2Icon } from "lucide-react";
 import MeetingCard from "@/components/MeetingCard";
+import WelcomeScroll from "@/components/WelcomeScroll";
 
 export default function Home() {
   const router = useRouter();
@@ -38,30 +39,21 @@ export default function Home() {
   if (isLoading) return <LoaderUI />;
 
   return (
-    <div className="container max-w-7xl mx-auto p-6">
-      {/* WELCOME SECTION */}
-      <div className="rounded-lg bg-card p-6 border shadow-sm mb-10">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-zinc-800 to-zinc-500 dark:from-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
-          Welcome back!
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          {isInterviewer
-            ? "Manage your interviews and review candidates effectively"
-            : "Access your upcoming interviews and preparations"}
-        </p>
-      </div>
-
+    <>
       {isInterviewer ? (
         <>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {QUICK_ACTIONS.map((action) => (
-              <ActionCard
-                key={action.title}
-                action={action}
-                onClick={() => handleQuickAction(action.title)}
-              />
-            ))}
-          </div>
+          {/* full-screen video hero with the cards overlaid on top */}
+          <WelcomeScroll>
+            <div className="flex flex-col gap-4">
+              {QUICK_ACTIONS.map((action) => (
+                <ActionCard
+                  key={action.title}
+                  action={action}
+                  onClick={() => handleQuickAction(action.title)}
+                />
+              ))}
+            </div>
+          </WelcomeScroll>
 
           <MeetingModal
             isOpen={showModal}
@@ -71,9 +63,9 @@ export default function Home() {
           />
         </>
       ) : (
-        <>
+        <div className="container max-w-7xl mx-auto px-6 pt-28 pb-16">
           <div>
-            <h1 className="text-3xl font-bold">Your Interviews</h1>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Your Interviews</h1>
             <p className="text-muted-foreground mt-1">View and join your scheduled interviews</p>
           </div>
 
@@ -94,8 +86,8 @@ export default function Home() {
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
