@@ -19,13 +19,13 @@ export default function MarketingHomePage() {
   return (
     <>
       <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-        <video
+        <img
           className="absolute inset-0 h-full w-full object-cover"
-          src="/Nüllrot -- ⫶ the rattener's malady.mkv"
-          autoPlay
-          loop
-          muted
-          playsInline
+          src="/retro2.webp"
+          //autoPlay
+          //loop
+          //muted
+          //playsInline
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="font-display absolute top-24 left-6 sm:left-10 z-10 text-white max-w-[40%]">

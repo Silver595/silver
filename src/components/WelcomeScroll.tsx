@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 // Full-screen video "page". Welcome text + whatever is passed as children
 // (e.g. the action-card grid) are overlaid on top of the video.
 export default function WelcomeScroll({
-  videoSrc = "/hero.mp4",
+  videoSrc = "/retro1.avif",
   children,
 }: {
   videoSrc?: string;
@@ -13,13 +13,13 @@ export default function WelcomeScroll({
     // full-bleed so it spans edge-to-edge past the layout padding
     <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen min-h-screen overflow-hidden">
       {/* BACKGROUND VIDEO */}
-      <video
+      <img
         className="absolute inset-0 h-full w-full object-cover"
         src={videoSrc}
-        autoPlay
-        loop
-        muted
-        playsInline
+        //autoPlay
+        //loop
+        //muted
+        //playsInline
       />
       <div className="absolute inset-0 bg-black/55" />
 
