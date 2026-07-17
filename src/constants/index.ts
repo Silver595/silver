@@ -37,7 +37,7 @@ export const QUICK_ACTIONS = [
     description: "Start an instant call",
     color: "primary",
     gradient: "from-primary/10 via-primary/5 to-transparent",
-    video: "/hero.mp4",
+    video: "/hero.mp",
   },
   {
     icon: Users,
@@ -45,7 +45,7 @@ export const QUICK_ACTIONS = [
     description: "Enter via invitation link",
     color: "purple-500",
     gradient: "from-purple-500/10 via-purple-500/5 to-transparent",
-    video: "/hero.mp4",
+    video: "/hero.mp",
   },
   {
     icon: Calendar,
@@ -53,7 +53,7 @@ export const QUICK_ACTIONS = [
     description: "Plan upcoming interviews",
     color: "blue-500",
     gradient: "from-blue-500/10 via-blue-500/5 to-transparent",
-    video: "/hero.mp4",
+    video: "/hero.mp",
   },
   {
     icon: Clock,
@@ -61,7 +61,7 @@ export const QUICK_ACTIONS = [
     description: "Access past interviews",
     color: "orange-500",
     gradient: "from-orange-500/10 via-orange-500/5 to-transparent",
-    video: "/hero.mp4",
+    video: "/hero.mp",
   },
 ];
 
@@ -85,7 +85,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
     starterCode: {
       javascript: `function twoSum(nums, target) {
   // Write your solution here
-  
+
 }`,
       python: `def two_sum(nums, target):
     # Write your solution here
@@ -93,7 +93,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
       java: `class Solution {
     public int[] twoSum(int[] nums, int target) {
         // Write your solution here
-        
+
     }
 }`,
     },
@@ -122,7 +122,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
     starterCode: {
       javascript: `function reverseString(s) {
   // Write your solution here
-  
+
 }`,
       python: `def reverse_string(s):
     # Write your solution here
@@ -130,7 +130,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
       java: `class Solution {
     public void reverseString(char[] s) {
         // Write your solution here
-        
+
     }
 }`,
     },
@@ -156,7 +156,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
     starterCode: {
       javascript: `function isPalindrome(x) {
   // Write your solution here
-  
+
 }`,
       python: `def is_palindrome(x):
     # Write your solution here
@@ -164,7 +164,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
       java: `class Solution {
     public boolean isPalindrome(int x) {
         // Write your solution here
-        
+
     }
 }`,
     },
