@@ -27,6 +27,9 @@ export const TIME_SLOTS = [
   "17:00",
 ];
 
+// `video` is the clip that reveals on hover for each button. They all point to
+// the same placeholder for now — swap each one for its own individual clip
+// (e.g. /videos/new-call.mp4) as you produce them.
 export const QUICK_ACTIONS = [
   {
     icon: Code2,
@@ -34,6 +37,7 @@ export const QUICK_ACTIONS = [
     description: "Start an instant call",
     color: "primary",
     gradient: "from-primary/10 via-primary/5 to-transparent",
+    video: "/hero.mp4",
   },
   {
     icon: Users,
@@ -41,6 +45,7 @@ export const QUICK_ACTIONS = [
     description: "Enter via invitation link",
     color: "purple-500",
     gradient: "from-purple-500/10 via-purple-500/5 to-transparent",
+    video: "/hero.mp4",
   },
   {
     icon: Calendar,
@@ -48,6 +53,7 @@ export const QUICK_ACTIONS = [
     description: "Plan upcoming interviews",
     color: "blue-500",
     gradient: "from-blue-500/10 via-blue-500/5 to-transparent",
+    video: "/hero.mp4",
   },
   {
     icon: Clock,
@@ -55,6 +61,7 @@ export const QUICK_ACTIONS = [
     description: "Access past interviews",
     color: "orange-500",
     gradient: "from-orange-500/10 via-orange-500/5 to-transparent",
+    video: "/hero.mp4",
   },
 ];
 
