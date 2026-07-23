@@ -1,7 +1,5 @@
 "use client";
 
-import ActionCard from "@/components/ActionCard";
-import { QUICK_ACTIONS } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useQuery } from "convex/react";
 import { useState } from "react";
@@ -12,6 +10,7 @@ import LoaderUI from "@/components/LoaderUI";
 import { Loader2Icon } from "lucide-react";
 import MeetingCard from "@/components/MeetingCard";
 import WelcomeScroll from "@/components/WelcomeScroll";
+import HorizontalCards from "@/components/HorizontalCards";
 
 export default function Home() {
   const router = useRouter();
@@ -43,17 +42,9 @@ export default function Home() {
       {isInterviewer ? (
         <>
           {/* full-screen video hero with the cards overlaid on top */}
-          <WelcomeScroll>
-            <div className="flex flex-col gap-4">
-              {QUICK_ACTIONS.map((action) => (
-                <ActionCard
-                  key={action.title}
-                  action={action}
-                  onClick={() => handleQuickAction(action.title)}
-                />
-              ))}
-            </div>
-          </WelcomeScroll>
+          <WelcomeScroll />
+
+          <HorizontalCards onAction={handleQuickAction} />
 
           <MeetingModal
             isOpen={showModal}

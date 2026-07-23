@@ -79,6 +79,7 @@ export const CODING_QUESTIONS: CodeQuestion[] = [
       },
       {
         input: "nums = [3,2,4], target = 6",
+
         output: "[1,2]",
       },
     ],
