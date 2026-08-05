@@ -1,0 +1,149 @@
+name: CI/CD Production Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Concurrency limits: cancel in-progress runs of the same workflow on the same branch
+# to save GitHub Actions runner minutes (very important for production!)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write  # Required to push Docker images to GitHub Container Registry (GHCR)
+
+jobs:
+  # ==========================================
+  # JOB 1: Validation (Continuous Integration)
+  # ==========================================
+  validate:
+    name: Verify Code Integrity
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Read Node.js Version
+        id: node-version
+        run: |
+          if [ -f .nvmrc ]; then
+            echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+          else
+            echo "version=20" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
+          cache: 'npm' # Automatically caches npm dependencies
+
+      # ----------------------------------------
+      # Next.js Build-Time Cache Setup (Crucial for Speed!)
+      # ----------------------------------------
+      - name: Restore Next.js Compiler Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache key whenever dependencies or files change
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # Fallback to older caches if the exact matches aren't found
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check Formatting & Linting
+        run: npm run lint
+
+      - name: Validate TypeScript Types
+        run: npx tsc --noEmit
+
+      - name: Build Application (Dry-Run)
+        env:
+          # Inject secrets during build validation as Next.js compiles static bundles
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+          NEXT_PUBLIC_STREAM_API_KEY: ${{ secrets.NEXT_PUBLIC_STREAM_API_KEY }}
+        run: npm run build
+
+  # ==========================================
+  # JOB 2: Build & Deploy (Continuous Deployment)
+  # ==========================================
+  deploy:
+    name: Build & Push Docker / Deploy Convex
+    needs: validate
+    # ONLY run this job on the main branch, never on Pull Requests!
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # ----------------------------------------
+      # CD Step A: Deploy Convex Backend Functions
+      # ----------------------------------------
+      - name: Setup Node.js (for Convex deploy)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies (Convex only)
+        run: npm ci
+
+      - name: Deploy Convex Database & Functions
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+        run: npx convex deploy
+
+      # ----------------------------------------
+      # CD Step B: Dockerize & Push to GitHub Packages (GHCR)
+      # ----------------------------------------
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        description: Enables multi-platform builds (e.g., build amd64 or arm64 if needed)
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        description: Use Buildx for state-of-the-art Docker caching
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Convert repository name to lowercase (Docker registries require lowercase tags)
+      - name: Convert repository name to lowercase
+        id: prep
+        run: |
+          echo "repo_lower=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          # Tags the image with the unique commit SHA and as 'latest'
+          tags: |
+            ghcr.io/${{ steps.prep.outputs.repo_lower }}:latest
+            ghcr.io/${{ steps.prep.outputs.repo_lower }}:${{ github.sha }}
+          # Pass build secrets directly into the Docker multi-stage build arguments
+          build-args: |
+            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+            NEXT_PUBLIC_CONVEX_URL=${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+            NEXT_PUBLIC_STREAM_API_KEY=${{ secrets.NEXT_PUBLIC_STREAM_API_KEY }}
+          # State-of-the-art Actions-native Docker layer caching
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
