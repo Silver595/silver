@@ -28,7 +28,7 @@ function DashboardPage() {
     try {
       await updateStatus({ id: interviewId, status });
       toast.success(`Interview marked as ${status}`);
-    } catch {
+    } catch (error) {
       toast.error("Failed to update status");
     }
   };
