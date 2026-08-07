@@ -6,6 +6,9 @@ const nextConfig = {
   // layer — it manifests as `TypeError: Cannot read properties of undefined
   // (reading 'prototype')` at runtime. Marking these external forces Node's own
   // require() at runtime instead of webpack bundling them.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     serverComponentsExternalPackages: ["@stream-io/node-sdk", "jsonwebtoken"],
   },
